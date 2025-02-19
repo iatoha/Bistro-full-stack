@@ -1,12 +1,43 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProviders";
 
 const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch(error => console.error(error));
+  };
+
   const navOptions = (
     <>
-      <li> <Link to="/">Home</Link> </li>
-      <li> <Link to="/Menu">Our Items</Link> </li>
-      <li> <Link to="/order/salad">Order Food</Link> </li>
-      <li> <Link to="/login">LogIn</Link> </li>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/menu">Our Items</Link>
+      </li>
+      <li>
+        <Link to="/order/salad">Order Food</Link>
+      </li>
+      <li>
+        <Link to="/secret">Secret</Link>
+      </li>
+      {user ? 
+        <>
+        <span>{user?.displayName }</span>
+          <button onClick={handleLogOut} className="btn btn-ghost">
+            Log Out
+          </button>
+        </>
+       : 
+        <>
+          <li>
+            <Link to="/login">LogIn</Link>
+          </li>
+        </>
+      }
     </>
   );
 
@@ -38,7 +69,9 @@ const NavBar = () => {
               {navOptions}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl"> <Link to="/">CreativeZone BD</Link> </a>
+          <a className="btn btn-ghost text-xl">
+            <Link to="/">CreativeZone BD</Link>
+          </a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navOptions}</ul>
@@ -46,7 +79,6 @@ const NavBar = () => {
         <div className="navbar-end">
           <a className="btn">Button</a>
         </div>
-        
       </div>
     </>
   );

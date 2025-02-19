@@ -64,6 +64,9 @@ const Footer = () => {
             Copyright © {new Date().getFullYear()} - All right reserved by Creative Zone BD !
           </p>
         </aside>
+        <div>
+        <small>Design and developed By: Toha <a href="https://wa.me/8801771655948?text=Hello%20,%20how%20are%20you?">☎📞</a></small>
+        </div>
     </footer>
   );
 };
