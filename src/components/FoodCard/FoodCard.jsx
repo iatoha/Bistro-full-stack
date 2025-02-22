@@ -1,7 +1,9 @@
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
+
 
 
 const FoodCard = ({item ={}}) => {
@@ -9,11 +11,12 @@ const FoodCard = ({item ={}}) => {
     const {user} = useAuth()
     const navigate = useNavigate();
     const location = useLocation();
+    const axiosSecure = useAxiosSecure();
+    const [, refetch]= useCart()
 
-    const handleAddToCart = food => {
+    const handleAddToCart = ()=> {
       if(user && user.email){
-        // TODO: send cart item to the database
-        console.log(user.email, food);
+        //  send cart item to the database
         const cartItem = {
           menuId: _id,
           email: user.email,
@@ -21,7 +24,7 @@ const FoodCard = ({item ={}}) => {
           image,
           price
         }
-        axios.post('http://localhost:5000/carts', cartItem)
+        axiosSecure.post('/carts', cartItem)
         .then(res => {
           console.log(res.data);
           if(res.data.insertedId){
@@ -32,6 +35,8 @@ const FoodCard = ({item ={}}) => {
               showConfirmButton: false,
               timer: 1500
             });
+            //  refetch the cart to update the cart items cart
+            refetch();
           }
         })
       }
@@ -67,7 +72,7 @@ const FoodCard = ({item ={}}) => {
         <div className="card-actions justify-end">
 
           <button 
-          onClick={() => handleAddToCart(item) }
+          onClick={ handleAddToCart }
           className="btn btn-outline bg-slate-100 uppercase border-0 border-b-4 border-orange-400"
           >Add to card</button>
         </div>
