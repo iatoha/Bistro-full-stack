@@ -4,8 +4,10 @@ import { GiStarsStack } from "react-icons/gi";
 import { MdEmail } from "react-icons/md";
 import { TbBrandBooking } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router-dom";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
+  const [cart] = useCart();
   return (
     <div className="flex">
       {/* dashboard side bar */}
@@ -24,14 +26,14 @@ const Dashboard = () => {
           <li>
             <NavLink to="/dashboard/cart">
             <FaShoppingCart></FaShoppingCart>
-            My Cart</NavLink>
+            My Cart ({cart.length}) </NavLink>
           </li>
           <li>
             <NavLink to="/dashboard/review">
             <GiStarsStack></GiStarsStack>
             Add review</NavLink>
           </li>
-          <li>
+          <li> 
             <NavLink to="/dashboard/bookings">
             <TbBrandBooking></TbBrandBooking>
             My Booking</NavLink>
