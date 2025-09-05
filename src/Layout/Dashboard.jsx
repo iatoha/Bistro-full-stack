@@ -1,4 +1,4 @@
-import { FaHome, FaShoppingCart } from "react-icons/fa";
+import { FaBook, FaHome, FaShoppingCart, FaUsers, FaUtensils, } from "react-icons/fa";
 import { FaBagShopping, FaCalendar, FaList } from "react-icons/fa6";
 import { GiStarsStack } from "react-icons/gi";
 import { MdEmail } from "react-icons/md";
@@ -8,56 +8,107 @@ import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
   const [cart] = useCart();
+
+  const isAdmin = true;
+
   return (
     <div className="flex">
       {/* dashboard side bar */}
       <div className="w-64 min-h-screen bg-orange-500">
         <ul className="menu p-4">
-          <li>
-            <NavLink to="/dashboard/userHome">
-            <FaHome></FaHome>
-            User Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/reservation">
-            <FaCalendar></FaCalendar>
-            reservation</NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/cart">
-            <FaShoppingCart></FaShoppingCart>
-            My Cart ({cart.length}) </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/review">
-            <GiStarsStack></GiStarsStack>
-            Add review</NavLink>
-          </li>
-          <li> 
-            <NavLink to="/dashboard/bookings">
-            <TbBrandBooking></TbBrandBooking>
-            My Booking</NavLink>
-          </li>
+          {isAdmin ? 
+            <>
+              <li>
+                <NavLink to="/dashboard/adminHome">
+                  <FaHome></FaHome>
+                  Admin Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/addItems">
+                  <FaUtensils></FaUtensils>
+                  Add Items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/manageitems">
+                  <FaList></FaList>
+                  Manage items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/bookings">
+                  <FaBook></FaBook>
+                  Manage Bookings
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/users">
+                  <FaUsers></FaUsers>
+                  All Users
+                </NavLink>
+              </li>
+            </>
+            : 
+            // users nav-links
+            <>
+              <li>
+                <NavLink to="/dashboard/userHome">
+                  <FaHome></FaHome>
+                  User Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/reservation">
+                  <FaCalendar></FaCalendar>
+                  reservation
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/cart">
+                  <FaShoppingCart></FaShoppingCart>
+                  My Cart ({cart.length})
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/review">
+                  <GiStarsStack></GiStarsStack>
+                  Add review
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/bookings">
+                  <TbBrandBooking></TbBrandBooking>
+                  My Booking
+                </NavLink>
+              </li>
+            </>
+          }
+          {/* shared nav-links */}
           <div className="divider"></div>
           <li>
             <NavLink to="/">
-            <FaHome></FaHome>
-             Home</NavLink>
+              <FaHome></FaHome>
+              Home
+            </NavLink>
           </li>
           <li>
             <NavLink to="/menu">
-            <FaList></FaList>
-             Menu</NavLink>
+              <FaList></FaList>
+              Menu
+            </NavLink>
           </li>
           <li>
             <NavLink to="/order/salad">
-            <FaBagShopping></FaBagShopping>
-             Shop</NavLink>
+              <FaBagShopping></FaBagShopping>
+              Shop
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/contact">
-            <MdEmail></MdEmail>
-             Contact</NavLink>
+            <NavLink to="order/contact">
+              <MdEmail></MdEmail>
+              Contact
+            </NavLink>
           </li>
         </ul>
       </div>
