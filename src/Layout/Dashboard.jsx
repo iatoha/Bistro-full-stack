@@ -1,4 +1,10 @@
-import { FaBook, FaHome, FaShoppingCart, FaUsers, FaUtensils, } from "react-icons/fa";
+import {
+  FaBook,
+  FaHome,
+  FaShoppingCart,
+  FaUsers,
+  FaUtensils,
+} from "react-icons/fa";
 import { FaBagShopping, FaCalendar, FaList } from "react-icons/fa6";
 import { GiStarsStack } from "react-icons/gi";
 import { MdEmail } from "react-icons/md";
@@ -16,8 +22,8 @@ const Dashboard = () => {
     <div className="flex">
       {/* dashboard side bar */}
       <div className="w-64 min-h-screen bg-orange-500">
-        <ul className="menu p-4">
-          {isAdmin ? 
+        <ul className="menu p-4 text-black">
+          {isAdmin ? (
             <>
               <li>
                 <NavLink to="/dashboard/adminHome">
@@ -50,7 +56,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </>
-            : 
+          ) : (
             // users nav-links
             <>
               <li>
@@ -60,9 +66,9 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/reservation">
+                <NavLink to="/dashboard/history">
                   <FaCalendar></FaCalendar>
-                  reservation
+                  Not History
                 </NavLink>
               </li>
               <li>
@@ -78,13 +84,13 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/bookings">
+                <NavLink to="/dashboard/paymentHistory">
                   <TbBrandBooking></TbBrandBooking>
-                  My Booking
+                  Real Payment History
                 </NavLink>
               </li>
             </>
-          }
+          )}
           {/* shared nav-links */}
           <div className="divider"></div>
           <li>

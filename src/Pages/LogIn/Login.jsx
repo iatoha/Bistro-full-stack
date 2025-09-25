@@ -7,18 +7,19 @@ import {
 import { AuthContext } from "../../providers/AuthProviders";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/";
-  console.log('state in the location to log in page', location.state);
-  
+  console.log("state in the location to log in page", location.state);
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -30,26 +31,36 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
-    signIn(email, password)
-    .then(result => {
+    signIn(email, password).then((result) => {
       const user = result.user;
       console.log(user);
+
+      // ADD THESE LINES TO GET AND SAVE JWT TOKEN
+    const userInfo = { email: user.email };
+    axiosPublic.post('/jwt', userInfo)
+        .then(res => {
+            if (res.data.token) {
+                localStorage.setItem('access-token', res.data.token);
+            }
+        });
+    
+
       Swal.fire({
         title: "User Log in successful",
         showClass: {
           popup: `
-            animate__animated
-            animate__fadeInUp
-            animate__faster
-          `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+            `,
         },
         hideClass: {
           popup: `
-            animate__animated
-            animate__fadeOutDown
-            animate__faster
-          `
-        }
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+            `,
+        },
       });
       navigate(from, { replace: true });
     });
@@ -66,9 +77,9 @@ const Login = () => {
 
   return (
     <>
-    <Helmet>
-      <title>Creative zone || Log in</title>
-    </Helmet>
+      <Helmet>
+        <title>Creative zone || Log in</title>
+      </Helmet>
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center md:w-1/2 lg:text-left">
@@ -124,7 +135,7 @@ const Login = () => {
               </div>
               <div className="form-control mt-6">
                 <input
-                // apply to recaptcha
+                  // apply to recaptcha
                   disabled={false}
                   className="btn btn-primary"
                   type="submit"
@@ -140,7 +151,6 @@ const Login = () => {
             <SocialLogin> </SocialLogin>
           </div>
         </div>
-        
       </div>
     </>
   );
